@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Data Flux</title>
+	<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1" /> 
+        <script src='mapbox-wax/ext/modestmaps.min.js' type='text/javascript'></script>
+        <script src='mapbox-wax/dist/wax.mm.js' type='text/javascript'></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+        <link href='fluxenergy.css' rel='stylesheet' type='text/css' />
+        <script>
+	var map;
+	
+function init(){
+
+var tilejson = {
+  tilejson: '1.0.0',
+  scheme: 'tms',
+  attribution:'<div id="mg-text"> <input type="text" name="search" placeholder="Search"  /></div>',
+  legend: '<a href="http://globaia.org"><img src="http://mapcoop.org/www-demo/demo/globaia.jpg" alt="" width="112" height="35" /></a>', 
+  tiles: ['http://mapcoop.org/1.0.0/flux_energie/{z}/{x}/{y}.png'],
+  grids: ['http://mapcoop.org/1.0.0/flux_energie/{z}/{x}/{y}.grid.json'],
+  formatter: function(options, data) { 
+
+  return " Name " + data.Name  + " Capacity of " + data.Capacity_G + " and distance of " + data.Distance_K + " Km  <br><a href='" +data.URL1+">"
+}
+
+  };
+  
+  var mm = com.modestmaps;
+  map = new mm.Map('wax-fullscreen-map',  new wax.mm.connector(tilejson));
+  
+  wax.mm.fullscreen(map, tilejson).appendTo(map.parent);
+  		//new mm.Point(800,460));  //taille de la div!
+  wax.mm.interaction(map, tilejson);
+  wax.mm.zoomer(map, tilejson).appendTo(map.parent);
+  wax.mm.attribution(map, tilejson).appendTo(map.parent);
+  wax.mm.legend(map, tilejson).appendTo(map.parent);
+  wax.mm.attribution(map, tilejson).appendTo(map.parent);
+  //wax.mm.fullscreen(m, tilejson).appendTo(m.parent);
+  map.setCenterZoom(new mm.Location(46, -71 ), 3);
+
+var fullscreen = wax.mm.fullscreen(map, tilejson);
+fullscreen.original();
+
+}
+
+
+
+	</script>
+</head>
+<body onLoad="init()">
+	<div id="wax-fullscreen-map" style="width: 100%; height: 100%"/>
+</body>
+</html>
